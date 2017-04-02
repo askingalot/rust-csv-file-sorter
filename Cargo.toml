@@ -1,0 +1,6 @@
+[package]
+name = "rust-csv-file-sorter"
+version = "0.1.0"
+authors = ["Andy Collins <askingalot@gmail.com>"]
+
+[dependencies]
