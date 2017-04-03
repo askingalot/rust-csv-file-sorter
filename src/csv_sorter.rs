@@ -1,4 +1,4 @@
-struct Csv {
+pub struct Csv {
     rows: Vec<Vec<String>>,
 }
 
@@ -20,6 +20,5 @@ mod tests {
         let csv = Csv::new(row);
 
         assert_eq!("foo".to_string(), csv.rows[0][0]);
-        panic!()
     }
 }
