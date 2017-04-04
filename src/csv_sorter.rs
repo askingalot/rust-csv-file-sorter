@@ -13,8 +13,11 @@ impl Csv {
         }
     }
 
-    pub fn sort_by(&mut self, col_name: &String) {
-        let col_index = self.header.iter().position(|h| h == col_name).unwrap();
+    pub fn sort_by(&mut self, col_name: String) {
+        let col_index = self.header
+            .iter()
+            .position(|h| h == &col_name)
+            .unwrap();
 
         self.rows
             .sort_by(|a, b| a[col_index].cmp(&(b[col_index])));
@@ -59,7 +62,7 @@ mod tests {
     fn sort_by_col_name_sorts_csv() {
         let mut csv = build_csv();
 
-        let col: &String = &"Col1".to_string();
+        let col = "Col1".to_string();
         csv.sort_by(col);
 
         assert_eq!("baz", csv.rows[0][0]);
