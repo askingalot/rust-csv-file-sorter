@@ -1,12 +1,15 @@
 
 pub struct Csv {
     header: Vec<String>,
-    rows: Vec<Vec<String>>,
+    pub rows: Vec<Vec<String>>,
 }
 
 impl Csv {
     pub fn new(mut rows: Vec<Vec<String>>) -> Csv {
-        let header = rows.remove(0);
+        let header = rows.remove(0)
+            .iter()
+            .map(|col| col.replace("\"", ""))
+            .collect();
         Csv {
             header: header,
             rows: rows,
@@ -14,13 +17,12 @@ impl Csv {
     }
 
     pub fn sort_by(&mut self, col_name: String) {
-        let col_index = self.header
-            .iter()
-            .position(|h| h == &col_name)
-            .unwrap();
+        let col_index = self.header.iter().position(|h| h == &col_name);
 
-        self.rows
-            .sort_by(|a, b| a[col_index].cmp(&(b[col_index])));
+        match col_index {
+            Some(index) => self.rows.sort_by(|a, b| a[index].cmp(&(b[index]))),
+            None => panic!(format!("{} {}", "Couldn't find column: ", col_name)),
+        }
     }
 }
 
